@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Member Verification | IEEE IAS DIU SBC</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f7f6;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .card {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            border-top: 5px solid #1e4611;
+        }
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+            color: #1e4611;
+            margin-bottom: 20px;
+        }
+        .status-icon {
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+        .valid { color: #38761d; }
+        .invalid { color: #d32f2f; }
+        h2 { margin: 10px 0; font-size: 22px; color: #333; }
+        p { color: #666; margin: 5px 0; font-size: 15px; }
+        .badge {
+            display: inline-block;
+            background: #eaf1ea;
+            color: #1e4611;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 15px;
+        }
+        .btn {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 10px 20px;
+            background: #1e4611;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: 0.3s;
+        }
+        .btn:hover { background: #38761d; }
+    </style>
+</head>
+<body>
+
+    <div class="card" id="resultCard">
+        <div class="logo">IEEE IAS DIU SBC</div>
+        <div id="content">Loading verification data...</div>
+        <a href="/" class="btn">Back to Home</a>
+    </div>
+
+    <script>
+        // ২৩ জন মেম্বারের ডাটাবেস (সংশোধিত আইডি সহ)
+        const membersData = {
+            // Student Advising Panel
+            "33-1371": { name: "Hashin Rayhan Akash", post: "Student Advisor", status: "Active Member" },
+            "33-1767": { name: "K.M Rubaiyat Hasan", post: "Student Advisor", status: "Active Member" },
+            "22205131130": { name: "Pallab Biswas", post: "Student Advisor", status: "Active Member" },
+            "22205131050": { name: "Khalid Shifullah Mehedi", post: "Student Advisor", status: "Active Member" },
+            "22205131115": { name: "Anik Chawdhury", post: "Student Advisor", status: "Active Member" },
+
+            // Executive Committee Members
+            "2305131099": { name: "Arman Hossain", post: "Chairperson", status: "Active Member" },
+            "2305131027": { name: "Priyanka Bhowmik", post: "Vice Chair – Activity", status: "Active Member" },
+            "2305131136": { name: "Mashiur Rahman Rana", post: "Vice Chair – Technical", status: "Active Member" },
+            "2305131210": { name: "Arafat Islam", post: "General Secretary", status: "Active Member" },
+            "2305131149": { name: "Rafi zaman", post: "Alumni Relations Coordinator", status: "Active Member" },
+            "251-33-024": { name: "Husan Abrar Abir", post: "Treasurer", status: "Active Member" },
+            "241-33-178": { name: "Mushfika akter arpa", post: "Creative Team Lead", status: "Active Member" },
+            "2305131138": { name: "Mst.Munika Khatun", post: "Female Coordinator", status: "Active Member" },
+            "241-33-035": { name: "M. M. Zion", post: "Webmaster", status: "Active Member" },
+            "241-33-010": { name: "MD Hasibur Rahaman", post: "Logistics Coordinator", status: "Active Member" },
+            "241-33-012": { name: "Md. Abdul Kader Siddique", post: "Multimedia Coordinator", status: "Active Member" },
+            "241-33-160": { name: "Md. Morsalin Joy Manik", post: "Graphics Design Coordinator (Senior)", status: "Active Member" },
+            "242-33-268": { name: "Ahnaf Ibrahim siam", post: "Graphics Design Coordinator", status: "Active Member" },
+            "251-33-141": { name: "Yousuf Arafat Santo", post: "Photography and Media Coordinator", status: "Active Member" },
+            "242-33-185": { name: "Shihab Sarker", post: "Web Design Coordinator", status: "Active Member" },
+            "242-33-179": { name: "Md.Mehedi Hasan Mondol", post: "Member Development Coordinator", status: "Active Member" },
+            "253-33-196": { name: "MD Shafin Haque", post: "Public Relations Coordinator", status: "Active Member" },
+            "241-33-098": { name: "Khalekur Jaman Sakib", post: "Research & Publication Coordinator", status: "Active Member" }
+        };
+
+        // URL থেকে ID রিড করা
+        const urlParams = new URLSearchParams(window.location.search);
+        const memberId = urlParams.get('id');
+        const contentDiv = document.getElementById('content');
+
+        if (memberId && membersData[memberId]) {
+            const member = membersData[memberId];
+            contentDiv.innerHTML = `
+                <div class="status-icon valid">✔️</div>
+                <h2 style="color: #38761d;">Verified Member</h2>
+                <h2>${member.name}</h2>
+                <p><strong>Role:</strong> ${member.post}</p>
+                <div class="badge">${member.status}</div>
+            `;
+        } else {
+            contentDiv.innerHTML = `
+                <div class="status-icon invalid">❌</div>
+                <h2 style="color: #d32f2f;">Verification Failed</h2>
+                <p>No valid member found with this ID.</p>
+                <p>This ID card might be invalid or expired.</p>
+            `;
+        }
+    </script>
+</body>
+</html>
